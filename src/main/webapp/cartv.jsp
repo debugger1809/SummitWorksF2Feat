@@ -29,10 +29,8 @@
 					onclick="return confirm('Are you sure?')">Remove</a></td>
 				<td>${item.product.id }</td>
 				<td>${item.product.name }</td>
-				<!-- 
-				<td><img src="${pageContext.request.contextPath }/resources/http://learningprogramming.net/wp-content/uploads/java/spring_mvc/${item.product.photo }"
-					width="50"></td>
-				-->
+				<%-- <td><img src="${pageContext.request.contextPath }/resources/http://learningprogramming.net/wp-content/uploads/java/spring_mvc/${item.product.photo }"
+					width="50"></td> --%>
 				<td><img src="/welcome/${item.product.photo}" width="50"></td>
 				<td>${item.product.price }</td>
 				<td>${item.quantity }</td>

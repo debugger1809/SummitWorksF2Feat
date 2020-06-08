@@ -28,7 +28,7 @@ public class CartController {
 			session.setAttribute("cart", cart);
 		} else {
 			List<Item> cartv = (List<Item>) session.getAttribute("cart");
-			int index = this.exists(id, cartv);
+			int index = this.exists(Long.parseLong(id), cartv);
 			if (index == -1) {
 				cartv.add(new Item(productModel.find(id), 1));
 			} else {
@@ -44,22 +44,22 @@ public class CartController {
 	public String remove(@PathVariable("id") String id, HttpSession session) {
 		ProductsModel productModel = new ProductsModel();
 		List<Item> cart = (List<Item>) session.getAttribute("cart");
-		int index = this.exists(id, cart);
+		int index = this.exists(Long.parseLong(id), cart);
 		if(index == -1) System.out.println("\n\n\n\nERROR - REMOVING NONEXISTANT ITEM\n\n\n");
 		else			cart.remove(index);
 		session.setAttribute("cart", cart);
 		return "redirect:/cartv.jsp";
 	}
 
-	private int exists(String id, List<Item> cart) {
+//	private int exists(String id, List<Item> cart) {
+	private int exists(long id, List<Item> cart) {
 		for (int i = 0; i < cart.size(); i++) {
-			if (cart.get(i).getProduct().getId().equalsIgnoreCase(id)) {
+		//	if (cart.get(i).getProduct().getId().equalsIgnoreCase(id)) {
+			if(cart.get(i).getProduct().getId() == id) {
 				return i;
 			}
 		}
 		return -1;
 	}
 
-	
-	//changes
 }

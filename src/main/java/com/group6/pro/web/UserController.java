@@ -2,6 +2,8 @@ package com.group6.pro.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.group6.pro.model.Kitchens;
+import com.group6.pro.model.Product;
 import com.group6.pro.model.User;
 import com.group6.pro.repository.KitchensRepository;
 import com.group6.pro.service.KitchenServiceImpl;
 import com.group6.pro.service.KitchensService;
+import com.group6.pro.service.ProductService;
 import com.group6.pro.service.SecurityService;
 import com.group6.pro.service.UserService;
 import com.group6.pro.validator.UserValidator;
@@ -39,6 +43,9 @@ public class UserController {
     
     @Autowired 
     private KitchensService kitchensService;
+    
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -94,7 +101,7 @@ public class UserController {
     @RequestMapping("/welcome/kitchenListing/{kitchenId}")
     public String KitchenOrderPage(@PathVariable(name = "kitchenId") String kitchen_name, Model model) {
 //        ModelAndView mav = new ModelAndView("edit_product");
-        Kitchens kitchen = kitchensService.findByUsername(kitchen_name);
+        Kitchens kitchen = kitchensService.findByKitchenname(kitchen_name);
 //        mav.addObject("kitchen", kitchen);
         model.addAttribute("kitchen", kitchen);     
         return "kitchen";
@@ -112,7 +119,8 @@ public class UserController {
       
 
     @PostMapping("/addKitchen")
-    public @ResponseBody String addKitchenPost(@RequestParam String name, @RequestParam String days, @RequestParam String start, @RequestParam String end) {
+    public @ResponseBody ModelAndView addKitchenPost(@RequestParam String name, @RequestParam String days, @RequestParam String start, @RequestParam String end,
+    		HttpSession session) {
         System.out.println("TEST");
         Kitchens kitchen = new Kitchens();
         kitchen.setKitchenName(name);
@@ -120,6 +128,29 @@ public class UserController {
         kitchen.setKitchen_start_time(start);
         kitchen.setKitchen_stop_time(end);
     	kitchensService.save(kitchen);
-        return "redirect:/welcome";
+    	session.setAttribute("kitchen", kitchen);
+//        return "addMenu";
+    	return new ModelAndView("addMenu", "kitchen", kitchen);
+    }
+    
+    @GetMapping("/addMenu")
+    public String addMenuGet(Model model) {
+        model.addAttribute("product", new Product());
+        return "addMenu";
+    }
+    
+      
+
+    @PostMapping("/addMenu")
+    public @ResponseBody ModelAndView addMenuPost(@RequestParam String name, @RequestParam String photo, @RequestParam String price, 
+    		HttpSession session) {
+    	Kitchens kitchen = (Kitchens)session.getAttribute("kitchen");
+        Product product = new Product();
+        product.setName(name);
+        product.setPhoto(photo);
+        product.setPrice(Double.parseDouble(price));
+        product.setKitchen(kitchen);
+        productService.save(product);
+        return new ModelAndView("addMenu", "kitchen", kitchen);
     }
 }

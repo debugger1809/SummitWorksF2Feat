@@ -6,8 +6,7 @@ import com.group6.pro.model.Kitchens;
 public interface KitchensService {
 	  void save(Kitchens kitchens);
 
-	    Kitchens findByUsername(String kitchen_name);
-	    Kitchens findById(long id);
+	    Kitchens findByKitchenname(String kitchen_name);
 
 }
 

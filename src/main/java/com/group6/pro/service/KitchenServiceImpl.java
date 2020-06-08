@@ -20,17 +20,16 @@ public class KitchenServiceImpl implements KitchensService {
 
     @Override
     public void save(Kitchens kitchens) 
-    {
+    {System.out.println("TEST");
     	kitchenRepository.save(kitchens);
     }
 
 	@Override
-	public Kitchens findByUsername(String kitchen_name) 
+	public Kitchens findByKitchenname(String kitchen_name)
 	{
 		return kitchenRepository.findByKitchenName(kitchen_name);
 	}
 	
-	@Override
 	public Kitchens findById(long id)
 	{
 		return kitchenRepository.getOne(id);

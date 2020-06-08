@@ -7,6 +7,7 @@
 <title>Product Page</title>
 </head>
 <body>
+
 	<h3>Products Page</h3>
 	<table cellpadding="2" cellspacing="2" border="1">
 		<tr>
@@ -20,10 +21,10 @@
 			<tr>
 				<td>${product.id }</td>
 				<td>${product.name }</td>
-				<td><img src="${product.photo}" width="50"></td>
+				<td><img src="${product.photo }" width="50"></td>
 				<td>${product.price }</td>
 				<td align="center">
-					<a href="${pageContext.request.contextPath }/welcome/cart/buy/${product.id}">Buy Now</a>
+					<a href="${pageContext.request.contextPath }welcome/cart/buy/${product.id}">Buy Now</a>
 				</td>
 			</tr>
 		</c:forEach>

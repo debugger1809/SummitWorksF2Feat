@@ -1,16 +1,20 @@
 package com.group6.pro.model;
 
-import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Kitchens")
-public class Kitchens implements Serializable{
+public class Kitchens {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +27,27 @@ public class Kitchens implements Serializable{
     private String Kitchen_start_time;
     
     private String Kitchen_stop_time;
+    
+    @ManyToOne
+	private ServiceProvider serviceprovider;
+    
+    @OneToMany(
+            mappedBy = "kitchen",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY
+        )
+    private Set<Product> menu;
+    
+    public Set<Product> getMenu(){return menu;}
+    public void setMenu(Set<Product> x) {menu = x;}
+    
+	public ServiceProvider getServiceprovider() {
+		return serviceprovider;
+	}
+
+	public void setServiceprovider(ServiceProvider serviceprovider) {
+		this.serviceprovider = serviceprovider;
+	}
 
 	public Long getKitchenid() {
 		return kitchenid;
