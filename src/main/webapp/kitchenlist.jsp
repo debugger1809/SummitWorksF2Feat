@@ -24,7 +24,7 @@
 		<c:forEach var="kitchens" items="${KitchenList }">
 			<tr>
 				<td>${kitchens.kitchenid }</td>
-				<td>${kitchens.kitchenName  }</td>
+				<td><a href="/welcome/product/${kitchens.kitchenName  }">${kitchens.kitchenName  }</a></td>
 				<td>${kitchens.kitchen_working_Days  }</td>
 				<td>${kitchens.kitchen_start_time  }</td>
 				<td>${kitchens.kitchen_stop_time  }</td>

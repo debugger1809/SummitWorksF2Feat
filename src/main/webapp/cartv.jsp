@@ -43,7 +43,7 @@
 		</tr>
 	</table>
 	<br>
-	<a href="${pageContext.request.contextPath }/welcome/product">Continue
+	<a href="/welcome/product/${kitchen }">Continue
 		Shopping</a>
 
 

@@ -3,16 +3,25 @@ package com.group6.pro.web;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.group6.pro.model.Item;
+import com.group6.pro.model.Kitchens;
+import com.group6.pro.model.Product;
 import com.group6.pro.model.ProductsModel;
+import com.group6.pro.service.KitchensService;
+import com.group6.pro.service.ProductService;
 
 @Controller
 @RequestMapping(value = "/welcome/cart")
 public class CartController {
+	
+	@Autowired
+	private ProductService productService;
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	public String index() {
@@ -20,18 +29,24 @@ public class CartController {
 	}
 
 	@RequestMapping(value = "buy/{id}", method = RequestMethod.GET)
-	public String buy(@PathVariable("id") String id, HttpSession session) {
-		ProductsModel productModel = new ProductsModel();
-		if (session.getAttribute("cart") == null) {
+	public String buy(@PathVariable("id") String id, HttpSession session) 
+	{
+		if (session.getAttribute("cart") == null) 
+		{
 			List<Item> cart = new ArrayList<Item>();
-			cart.add(new Item(productModel.find(id), 1));
+			cart.add(new Item(productService.findById(Long.parseLong(id)), 1));
 			session.setAttribute("cart", cart);
-		} else {
+		} 
+		else 
+		{
 			List<Item> cartv = (List<Item>) session.getAttribute("cart");
 			int index = this.exists(Long.parseLong(id), cartv);
-			if (index == -1) {
-				cartv.add(new Item(productModel.find(id), 1));
-			} else {
+			if (index == -1) 
+			{
+				cartv.add(new Item(productService.findById(Long.parseLong(id)), 1));
+			} 
+			else 
+			{
 				int quantity = cartv.get(index).getQuantity() + 1;
 				cartv.get(index).setQuantity(quantity);
 			}

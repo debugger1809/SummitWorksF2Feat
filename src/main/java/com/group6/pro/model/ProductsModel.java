@@ -28,5 +28,8 @@ public class ProductsModel {
 		}
 		return null;
 	}
+	
+	public List<Product> getProducts() {return products;}
+	public void setProducts(List<Product> x) {products = x;}
 
 }
