@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add user</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<h1>Add User</h1>
+
+<form action="#" th:action="@{/addKitchen}" th:object="${Kitchens}" method="post">
+    <p>
+        Name: <input type="text" th:field="*{kitchenName}">
+    </p>
+    <p>
+        Name: <input type="text" th:field="*{Kitchen_working_Days}">
+    </p>
+    <p>
+        Occupation: <input type="text" th:field="*{Kitchen_start_time}">
+    </p>
+    <p>
+        Occupation: <input type="text" th:field="*{Kitchen_stop_time}">
+    </p>
+    <p>
+        <input type="submit" value="Submit"/> <input type="reset" value="Reset">
+    </p>
+</form>
+
+</body>
+</html>
