@@ -1,0 +1,9 @@
+create table products
+(
+	id int primary key not null auto_increment,
+    name varchar(45),
+    photo varchar(45),
+    price double,
+	kitchenid bigint
+);
+alter table products add foreign key (kitchenid) references kitchens(kitchenid);
